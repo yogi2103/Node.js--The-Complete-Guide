@@ -23,9 +23,10 @@ const fileSchema= new Schema({
         required:false
     },
     uuid:{
-        type: Number,
+        type: String,
         required: true
     }
 },{timestamps:true});
 
-module.exports= mongoose.model('File','fileSchema');
+const File=mongoose.model('file',fileSchema);
+module.exports= File;
