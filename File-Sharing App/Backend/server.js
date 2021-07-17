@@ -3,6 +3,10 @@ const app=express();
 const path=require('path');
 
 const PORT=process.env.PORT ||3000;
+
+//for static files
+app.use(express.static('assets'));
+
 const connectDB=require('./config/db');
 connectDB();
 
