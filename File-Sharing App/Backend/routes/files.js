@@ -3,6 +3,8 @@ const multer=require('multer');
 const path=require('path');
 const File=require('../models/file');
 const { v4: uuidv4} = require('uuid');
+const sendMail=require('../Services/emailServies');
+const emailTemplate=require('../Services/emailTemplate');
 
 let storage = multer.diskStorage({
     destination:(req,file,cb)=>cb(null,'uploads/'),
@@ -66,6 +68,18 @@ router.post('/send',async (req,res)=>{
 
     //saving the file
     const response= await file.save();
+    sendMail({
+         from: emailFrom,
+         to: emailTo,
+         subject: 'File-Sharing',
+         text: `${emailFrom} shared a file with you`,
+         html: emailTemplate({
+             emailFrom : emailFrom,
+             downloadLink: `${process.env.APP_BASE_URL}/files/${file.uuid}`,
+             size: parseInt(fileSize/1000) +'KB',
+             expires: '24 hours'
+         })
+    })
 })
 
 module.exports=router;
