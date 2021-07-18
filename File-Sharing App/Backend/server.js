@@ -7,6 +7,9 @@ const PORT=process.env.PORT ||3000;
 //for static files
 app.use(express.static('assets'));
 
+//for json request of email
+app.use(express.json());
+
 const connectDB=require('./config/db');
 connectDB();
 

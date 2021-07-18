@@ -16,7 +16,7 @@ let storage = multer.diskStorage({
 
 let upload=multer({ 
     storage: storage,
-    limit: {fileSize:1000000 * 100} //100mb
+    limit: {filesize:1000000 * 100} //100mb
  }).single('myfile');   //for uploading single file
 
 router.post('/',(req,res)=>{
@@ -42,7 +42,6 @@ router.post('/',(req,res)=>{
     });
 
     const response= await file.save();
-    console.log(response);
     //http://localhost:8000/files/232342jdfdf
     //Response->Link
     return res.json({ file: `${process.env.APP_BASE_URL}/files/${response.uuid}` });
@@ -52,6 +51,7 @@ router.post('/',(req,res)=>{
 
 router.post('/send',async (req,res)=>{
     const {uuid, emailTo, emailFrom}=req.body;
+    console.log(req.body);
     //validate request
     if(!uuid || !emailTo || !emailFrom){
         return res.status(422).send({error:"All fields are required"});
@@ -70,16 +70,17 @@ router.post('/send',async (req,res)=>{
     const response= await file.save();
     sendMail({
          from: emailFrom,
-         to: emailTo,
+         To: emailTo,
          subject: 'File-Sharing',
          text: `${emailFrom} shared a file with you`,
          html: emailTemplate({
              emailFrom : emailFrom,
              downloadLink: `${process.env.APP_BASE_URL}/files/${file.uuid}`,
-             size: parseInt(fileSize/1000) +'KB',
+             size: parseInt(file.size/1000) +'KB',
              expires: '24 hours'
          })
-    })
+    });
+    return res.send({success:'true'});
 })
 
 module.exports=router;
