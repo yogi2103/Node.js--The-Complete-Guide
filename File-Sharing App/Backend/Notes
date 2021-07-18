@@ -5,3 +5,6 @@ Our downlaoad page have url something like above and the last part is uuid and s
 //http://localhost:8000/files/2
 then one can easily download other files also which are uploaded by someone else.
 So it's best for confidential part.
+
+Api For testing of download page:
+http://localhost:8000/files/d29c48f9-4b28-4400-a2f9-a072a6a1fbfc
