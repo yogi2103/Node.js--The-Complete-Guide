@@ -57,7 +57,7 @@ body,.drop-zone{                       /*For making the content on center*/
     transform: rotate(10deg) translateX(20px) scale(.9);
 }
 
-.drsagged .icon-container .left{
+.dragged .icon-container .left{
     transform: rotate(-10deg) translateX(-20px) scale(.9);
 }
 
